@@ -20,13 +20,47 @@ export const assets: Asset[] = [
 
 export const totalBalance = assets.reduce((sum, a) => sum + a.price * a.amount, 0);
 
-export const chartData = Array.from({ length: 40 }, (_, i) => {
-  const base = totalBalance * 0.86;
-  const wave = Math.sin(i / 4) * totalBalance * 0.035 + (i / 39) * totalBalance * 0.14;
-  return { i, value: Math.round(base + wave) };
-});
+export const ranges = ["1D", "1W", "1M", "1Y", "ALL"] as const;
+export type Range = (typeof ranges)[number];
 
-export const ranges = ["1D", "1W", "1M", "1Y", "ALL"];
+const rangePoints: Record<Range, { points: number; amp: number; drift: number }> = {
+  "1D": { points: 24, amp: 0.008, drift: 0.012 },
+  "1W": { points: 28, amp: 0.02, drift: 0.03 },
+  "1M": { points: 40, amp: 0.035, drift: 0.14 },
+  "1Y": { points: 52, amp: 0.06, drift: 0.42 },
+  ALL: { points: 60, amp: 0.09, drift: 0.78 },
+};
+
+export function seriesFor(range: Range, total: number) {
+  const { points, amp, drift } = rangePoints[range];
+  const base = total * (1 - drift * 0.6);
+  return Array.from({ length: points }, (_, i) => {
+    const wave = Math.sin(i / 3.3) * total * amp + Math.cos(i / 7) * total * amp * 0.4;
+    return { i, value: Math.round(base + wave + (i / (points - 1)) * total * drift * 0.6) };
+  });
+}
+
+export const chartData = seriesFor("1M", totalBalance);
+
+export type Tx = {
+  id: string;
+  kind: "Sent" | "Received" | "Swapped" | "Bought" | "Staked";
+  assetId: string;
+  amount: number;
+  usd: number;
+  date: string;
+  status: "Confirmed" | "Pending";
+};
+
+export const initialTxs: Tx[] = [
+  { id: "t1", kind: "Received", assetId: "btc", amount: 0.052, usd: 3338.94, date: "Today, 09:14", status: "Confirmed" },
+  { id: "t2", kind: "Swapped", assetId: "eth", amount: 0.8, usd: 2631.12, date: "Yesterday, 18:02", status: "Confirmed" },
+  { id: "t3", kind: "Sent", assetId: "sol", amount: 4.2, usd: 624.83, date: "Aug 20, 11:47", status: "Confirmed" },
+  { id: "t4", kind: "Bought", assetId: "usdt", amount: 500, usd: 500, date: "Aug 18, 08:30", status: "Confirmed" },
+];
 
 export const fmt = (n: number, digits = 2) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: digits, maximumFractionDigits: digits });
+
+export const fmtCrypto = (n: number) =>
+  n.toLocaleString("en-US", { maximumFractionDigits: 6 });
