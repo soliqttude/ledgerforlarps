@@ -1,24 +1,39 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { BottomNav, type TabId } from "@/components/ledger/BottomNav";
+import { WalletTab } from "@/components/ledger/WalletTab";
+import { EarnTab } from "@/components/ledger/EarnTab";
+import { DiscoverTab } from "@/components/ledger/DiscoverTab";
+import { MyLedgerTab } from "@/components/ledger/MyLedgerTab";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = "Ledger — Crypto Wallet App";
+const description =
+  "Manage your crypto securely: track your portfolio, buy, swap, stake and explore Web3 apps from your Ledger device.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const [tab, setTab] = useState<TabId>("wallet");
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background text-foreground">
+      <main className="flex-1">
+        {tab === "wallet" && <WalletTab />}
+        {tab === "earn" && <EarnTab />}
+        {tab === "discover" && <DiscoverTab />}
+        {tab === "myledger" && <MyLedgerTab />}
+      </main>
+      <BottomNav active={tab} onChange={setTab} />
     </div>
   );
 }
