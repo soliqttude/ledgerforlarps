@@ -1,35 +1,39 @@
-import { fmt, type Asset } from "./data";
+import { fmt, fmtCrypto, type Asset } from "./data";
 
-export function AssetIcon({ asset, size = 40 }: { asset: Asset; size?: number }) {
+export function AssetIcon({ asset, size = 44 }: { asset: Asset; size?: number }) {
   return (
     <div
-      className="flex shrink-0 items-center justify-center rounded-full font-semibold text-white"
-      style={{ width: size, height: size, backgroundColor: asset.color, fontSize: size * 0.45 }}
+      className="flex shrink-0 items-center justify-center rounded-full font-semibold text-white ring-1 ring-white/10"
+      style={{ width: size, height: size, backgroundColor: asset.color, fontSize: size * 0.44 }}
     >
       {asset.glyph}
     </div>
   );
 }
 
-export function AssetRow({ asset }: { asset: Asset }) {
+export function AssetRow({
+  asset,
+  onClick,
+  hidden,
+}: {
+  asset: Asset;
+  onClick?: () => void;
+  hidden?: boolean;
+}) {
   const value = asset.price * asset.amount;
-  const up = asset.change >= 0;
   return (
-    <button className="flex w-full items-center gap-3 rounded-2xl px-2 py-3 text-left transition-colors active:bg-accent">
+    <button
+      onClick={onClick}
+      className="flex w-full items-center gap-3.5 rounded-2xl px-1 py-3 text-left transition-colors active:bg-card"
+    >
       <AssetIcon asset={asset} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[15px] font-medium text-foreground">{asset.name}</p>
-        <p className="text-[13px] text-muted-foreground">
-          {asset.amount} {asset.ticker}
+        <p className="truncate text-[17px] font-semibold text-foreground">{asset.name}</p>
+        <p className="text-[15px] text-muted-foreground">
+          {hidden ? "••••" : fmtCrypto(asset.amount)} {asset.ticker}
         </p>
       </div>
-      <div className="text-right">
-        <p className="text-[15px] font-medium text-foreground">{fmt(value)}</p>
-        <p className={`text-[13px] ${up ? "text-success" : "text-destructive"}`}>
-          {up ? "+" : ""}
-          {asset.change.toFixed(2)}%
-        </p>
-      </div>
+      <p className="text-[17px] font-semibold text-foreground">{hidden ? "••••" : fmt(value)}</p>
     </button>
   );
 }
