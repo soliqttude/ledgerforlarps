@@ -1,55 +1,36 @@
-import { Wallet, TrendingUp, Compass, Cpu, ArrowLeftRight } from "lucide-react";
+import { Home, Repeat2, LineChart, CreditCard } from "lucide-react";
 
-export type TabId = "wallet" | "earn" | "discover" | "myledger";
+export type TabId = "home" | "swap" | "earn" | "card";
 
-const tabs: { id: TabId; label: string; icon: typeof Wallet }[] = [
-  { id: "wallet", label: "Wallet", icon: Wallet },
-  { id: "earn", label: "Earn", icon: TrendingUp },
-  { id: "discover", label: "Discover", icon: Compass },
-  { id: "myledger", label: "My Ledger", icon: Cpu },
+const tabs: { id: TabId; label: string; icon: typeof Home }[] = [
+  { id: "home", label: "Home", icon: Home },
+  { id: "swap", label: "Swap", icon: Repeat2 },
+  { id: "earn", label: "Earn", icon: LineChart },
+  { id: "card", label: "Card", icon: CreditCard },
 ];
 
 export function BottomNav({ active, onChange }: { active: TabId; onChange: (t: TabId) => void }) {
   return (
-    <nav className="sticky bottom-0 z-20 border-t border-border bg-background/95 backdrop-blur">
-      <div className="relative grid grid-cols-5 items-center px-2 pb-5 pt-2">
-        {tabs.slice(0, 2).map((t) => (
-          <TabButton key={t.id} tab={t} active={active} onChange={onChange} />
-        ))}
-        <div className="flex justify-center">
-          <button
-            aria-label="Transfer"
-            className="-mt-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg active:opacity-90"
-          >
-            <ArrowLeftRight className="h-6 w-6" />
-          </button>
-        </div>
-        {tabs.slice(2).map((t) => (
-          <TabButton key={t.id} tab={t} active={active} onChange={onChange} />
-        ))}
+    <nav className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center pb-5">
+      <div className="pointer-events-auto mx-4 flex w-full max-w-[420px] items-center justify-between rounded-full bg-card/95 p-1.5 backdrop-blur-xl">
+        {tabs.map((t) => {
+          const Icon = t.icon;
+          const isActive = active === t.id;
+          return (
+            <button
+              key={t.id}
+              onClick={() => onChange(t.id)}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex flex-1 flex-col items-center gap-1 rounded-full py-2.5 transition-colors ${
+                isActive ? "bg-secondary text-foreground" : "text-foreground/85 active:bg-secondary/60"
+              }`}
+            >
+              <Icon className="h-[22px] w-[22px]" strokeWidth={1.9} />
+              <span className="text-[12px] font-medium">{t.label}</span>
+            </button>
+          );
+        })}
       </div>
     </nav>
-  );
-}
-
-function TabButton({
-  tab,
-  active,
-  onChange,
-}: {
-  tab: { id: TabId; label: string; icon: typeof Wallet };
-  active: TabId;
-  onChange: (t: TabId) => void;
-}) {
-  const Icon = tab.icon;
-  const isActive = active === tab.id;
-  return (
-    <button
-      onClick={() => onChange(tab.id)}
-      className={`flex flex-col items-center gap-1 py-1 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
-    >
-      <Icon className="h-5 w-5" />
-      <span className="text-[11px] font-medium">{tab.label}</span>
-    </button>
   );
 }
