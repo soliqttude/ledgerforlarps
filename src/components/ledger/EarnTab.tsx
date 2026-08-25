@@ -1,6 +1,6 @@
 import { ChevronRight, Calculator } from "lucide-react";
 import { toast } from "sonner";
-import { fmt } from "./data";
+import { fmt, type Asset } from "./data";
 import { AssetIcon } from "./AssetRow";
 import { TopBar } from "./HomeTab";
 import { useLedger } from "./store";
@@ -76,7 +76,7 @@ export function EarnTab() {
   );
 }
 
-function Row({ items, onPick }: { items: ReturnType<typeof Object>[] | any[]; onPick: (id: string) => void }) {
+function Row({ items, onPick }: { items: Asset[]; onPick: (id: string) => void }) {
   return (
     <div className="mt-3 flex gap-3 overflow-x-auto px-5 pb-1 [scrollbar-width:none]">
       {items.map((a) => (

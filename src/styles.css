@@ -144,3 +144,37 @@
     color: var(--color-foreground);
   }
 }
+
+@utility halftone {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 420px;
+  pointer-events: none;
+  opacity: 0.5;
+  mask-image: linear-gradient(to bottom, black, transparent);
+  background-size: 10px 10px;
+}
+
+@utility halftone-purple {
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--primary) 70%, transparent) 1.1px,
+    transparent 1.2px
+  );
+}
+
+@utility halftone-blue {
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--chart-5) 70%, transparent) 1.1px,
+    transparent 1.2px
+  );
+}
+
+@utility halftone-green {
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--success) 70%, transparent) 1.1px,
+    transparent 1.2px
+  );
+}
