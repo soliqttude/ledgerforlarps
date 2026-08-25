@@ -52,6 +52,40 @@ export function LedgerProvider({ children }: { children: ReactNode }) {
   const [txs, setTxs] = useState<Tx[]>(initialTxs);
   const [sheet, setSheet] = useState<SheetKind>({ type: "none" });
   const [hideBalances, setHide] = useState(false);
+  const [livePrices, setLivePrices] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const ids = Object.values(COINGECKO_IDS).join(",");
+    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+
+    async function load() {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const json = (await res.json()) as Record<string, { usd?: number; usd_24h_change?: number }>;
+        if (cancelled) return;
+        setAssets((prev) =>
+          prev.map((a) => {
+            const cgId = COINGECKO_IDS[a.id];
+            const quote = cgId ? json[cgId] : undefined;
+            if (!quote?.usd) return a;
+            return { ...a, price: quote.usd, change: quote.usd_24h_change ?? a.change };
+          }),
+        );
+        setLivePrices(true);
+      } catch {
+        /* keep seeded prices offline */
+      }
+    }
+
+    void load();
+    const timer = setInterval(load, 60_000);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, []);
 
   const byId = useCallback((id: string) => assets.find((a) => a.id === id)!, [assets]);
 
