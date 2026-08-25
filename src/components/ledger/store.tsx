@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { assets as seedAssets, initialTxs, type Asset, type Tx } from "./data";
 
 export type SheetKind =
@@ -13,7 +13,19 @@ export type SheetKind =
   | { type: "scan" }
   | { type: "accounts" }
   | { type: "stake"; assetId: string }
+  | { type: "edit" }
   | { type: "app"; name: string };
+
+const COINGECKO_IDS: Record<string, string> = {
+  btc: "bitcoin",
+  eth: "ethereum",
+  bnb: "binancecoin",
+  usdt: "tether",
+  xrp: "ripple",
+  usdc: "usd-coin",
+  sol: "solana",
+  dai: "dai",
+};
 
 type Ctx = {
   assets: Asset[];
@@ -29,6 +41,8 @@ type Ctx = {
   buy: (assetId: string, usd: number) => void;
   total: number;
   byId: (id: string) => Asset;
+  setAmount: (id: string, amount: number) => void;
+  livePrices: boolean;
 };
 
 const LedgerCtx = createContext<Ctx | null>(null);
@@ -38,6 +52,40 @@ export function LedgerProvider({ children }: { children: ReactNode }) {
   const [txs, setTxs] = useState<Tx[]>(initialTxs);
   const [sheet, setSheet] = useState<SheetKind>({ type: "none" });
   const [hideBalances, setHide] = useState(false);
+  const [livePrices, setLivePrices] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const ids = Object.values(COINGECKO_IDS).join(",");
+    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`;
+
+    async function load() {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const json = (await res.json()) as Record<string, { usd?: number; usd_24h_change?: number }>;
+        if (cancelled) return;
+        setAssets((prev) =>
+          prev.map((a) => {
+            const cgId = COINGECKO_IDS[a.id];
+            const quote = cgId ? json[cgId] : undefined;
+            if (!quote?.usd) return a;
+            return { ...a, price: quote.usd, change: quote.usd_24h_change ?? a.change };
+          }),
+        );
+        setLivePrices(true);
+      } catch {
+        /* keep seeded prices offline */
+      }
+    }
+
+    void load();
+    const timer = setInterval(load, 60_000);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, []);
 
   const byId = useCallback((id: string) => assets.find((a) => a.id === id)!, [assets]);
 
@@ -64,6 +112,11 @@ export function LedgerProvider({ children }: { children: ReactNode }) {
       toggleHide: () => setHide((v) => !v),
       total,
       byId,
+      livePrices,
+      setAmount: (id, amount) =>
+        setAssets((prev) =>
+          prev.map((a) => (a.id === id ? { ...a, amount: Number.isFinite(amount) ? Math.max(0, amount) : 0 } : a)),
+        ),
       send: (assetId, amount) => {
         const a = assets.find((x) => x.id === assetId)!;
         adjust(assetId, -amount);
