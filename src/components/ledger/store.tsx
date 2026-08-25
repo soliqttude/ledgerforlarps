@@ -41,6 +41,8 @@ type Ctx = {
   buy: (assetId: string, usd: number) => void;
   total: number;
   byId: (id: string) => Asset;
+  setAmount: (id: string, amount: number) => void;
+  livePrices: boolean;
 };
 
 const LedgerCtx = createContext<Ctx | null>(null);
