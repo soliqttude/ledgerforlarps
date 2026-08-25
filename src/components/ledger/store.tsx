@@ -112,6 +112,11 @@ export function LedgerProvider({ children }: { children: ReactNode }) {
       toggleHide: () => setHide((v) => !v),
       total,
       byId,
+      livePrices,
+      setAmount: (id, amount) =>
+        setAssets((prev) =>
+          prev.map((a) => (a.id === id ? { ...a, amount: Number.isFinite(amount) ? Math.max(0, amount) : 0 } : a)),
+        ),
       send: (assetId, amount) => {
         const a = assets.find((x) => x.id === assetId)!;
         adjust(assetId, -amount);
