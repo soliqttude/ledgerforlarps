@@ -13,7 +13,19 @@ export type SheetKind =
   | { type: "scan" }
   | { type: "accounts" }
   | { type: "stake"; assetId: string }
+  | { type: "edit" }
   | { type: "app"; name: string };
+
+const COINGECKO_IDS: Record<string, string> = {
+  btc: "bitcoin",
+  eth: "ethereum",
+  bnb: "binancecoin",
+  usdt: "tether",
+  xrp: "ripple",
+  usdc: "usd-coin",
+  sol: "solana",
+  dai: "dai",
+};
 
 type Ctx = {
   assets: Asset[];
