@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { assets as seedAssets, initialTxs, type Asset, type Tx } from "./data";
 
 export type SheetKind =
