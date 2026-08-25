@@ -208,7 +208,7 @@ function AssetDetail({ assetId }: { assetId: string }) {
   );
 }
 
-function SendView({ assetId }: { assetId?: string }) {
+function SendView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
   const [id, setId] = useState(assetId ?? l.assets[0].id);
   const [amount, setAmount] = useState("0");
@@ -247,7 +247,7 @@ function SendView({ assetId }: { assetId?: string }) {
   );
 }
 
-function ReceiveView({ assetId }: { assetId?: string }) {
+function ReceiveView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
   const [id, setId] = useState(assetId ?? l.assets[0].id);
   const a = l.byId(id);
@@ -283,7 +283,7 @@ function ReceiveView({ assetId }: { assetId?: string }) {
   );
 }
 
-function BuyView({ assetId }: { assetId?: string }) {
+function BuyView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
   const [id, setId] = useState(assetId ?? l.assets[0].id);
   const [usd, setUsd] = useState("100");
@@ -318,7 +318,7 @@ function BuyView({ assetId }: { assetId?: string }) {
   );
 }
 
-function SwapView({ assetId }: { assetId?: string }) {
+function SwapView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
   const [from, setFrom] = useState(assetId ?? l.assets[0].id);
   const [to, setTo] = useState(l.assets.find((a) => a.id !== (assetId ?? l.assets[0].id))!.id);
