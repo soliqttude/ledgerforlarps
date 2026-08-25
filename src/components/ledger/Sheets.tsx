@@ -208,9 +208,9 @@ function AssetDetail({ assetId }: { assetId: string }) {
   );
 }
 
-function SendView({ assetId }: { assetId?: string }) {
+function SendView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
-  const [id, setId] = useState(assetId ?? l.assets[0].id);
+  const [id, setId] = useState(assetId ?? l.assets[0]!.id);
   const [amount, setAmount] = useState("0");
   const [addr, setAddr] = useState("");
   const a = l.byId(id);
@@ -247,9 +247,9 @@ function SendView({ assetId }: { assetId?: string }) {
   );
 }
 
-function ReceiveView({ assetId }: { assetId?: string }) {
+function ReceiveView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
-  const [id, setId] = useState(assetId ?? l.assets[0].id);
+  const [id, setId] = useState(assetId ?? l.assets[0]!.id);
   const a = l.byId(id);
   const address = `${a.ticker.toLowerCase()}1q${a.id}9x7fk2m4zlp8vt3nd6rhs0quw5ej`;
   return (
@@ -283,9 +283,9 @@ function ReceiveView({ assetId }: { assetId?: string }) {
   );
 }
 
-function BuyView({ assetId }: { assetId?: string }) {
+function BuyView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
-  const [id, setId] = useState(assetId ?? l.assets[0].id);
+  const [id, setId] = useState(assetId ?? l.assets[0]!.id);
   const [usd, setUsd] = useState("100");
   const a = l.byId(id);
   const num = parseFloat(usd) || 0;
@@ -318,10 +318,10 @@ function BuyView({ assetId }: { assetId?: string }) {
   );
 }
 
-function SwapView({ assetId }: { assetId?: string }) {
+function SwapView({ assetId }: { assetId?: string | undefined }) {
   const l = useLedger();
-  const [from, setFrom] = useState(assetId ?? l.assets[0].id);
-  const [to, setTo] = useState(l.assets.find((a) => a.id !== (assetId ?? l.assets[0].id))!.id);
+  const [from, setFrom] = useState(assetId ?? l.assets[0]!.id);
+  const [to, setTo] = useState(l.assets.find((a) => a.id !== (assetId ?? l.assets[0]!.id))!.id);
   const [amount, setAmount] = useState("0");
   const f = l.byId(from);
   const t = l.byId(to);
