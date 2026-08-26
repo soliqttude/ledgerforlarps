@@ -1,4 +1,4 @@
-import { User, Compass, Search, Clock, Scan, ShoppingCart, ChevronRight, ChevronDown } from "lucide-react";
+import { User, Compass, Search, Clock, ChevronRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { fmt, market } from "./data";
@@ -50,23 +50,6 @@ export function HomeTab() {
         <p className="mt-1 text-center text-[44px] font-bold leading-none tracking-tight">
           {l.hideBalances ? "••••" : fmt(l.total)}
         </p>
-
-        <div className="mt-6 grid grid-cols-2 gap-3 px-5">
-          <button
-            onClick={() => l.open({ type: "scan" })}
-            className="flex flex-col items-center gap-2.5 rounded-2xl bg-card py-6 text-[17px] font-semibold active:bg-secondary"
-          >
-            <Scan className="h-6 w-6" strokeWidth={1.7} />
-            Connect
-          </button>
-          <button
-            onClick={() => l.open({ type: "app", name: "Buy a Ledger" })}
-            className="flex flex-col items-center gap-2.5 rounded-2xl bg-card py-6 text-[17px] font-semibold active:bg-secondary"
-          >
-            <ShoppingCart className="h-6 w-6" strokeWidth={1.7} />
-            Buy a Ledger
-          </button>
-        </div>
 
         <div className="mt-8 flex items-center justify-between px-5">
           <button
