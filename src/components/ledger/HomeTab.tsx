@@ -20,7 +20,7 @@ export function TopBar({ tint = "purple" }: { tint?: "purple" | "blue" | "green"
             <button aria-label="Discover" className={round} onClick={() => l.open({ type: "app", name: "Discover" })}>
               <Compass className="h-6 w-6" strokeWidth={1.6} />
             </button>
-            <button aria-label="Search" className={round} onClick={() => l.open({ type: "accounts" })}>
+            <button aria-label="Search" className={round} onClick={() => l.open({ type: "edit" })}>
               <Search className="h-6 w-6" strokeWidth={1.6} />
             </button>
           </>
@@ -46,14 +46,9 @@ export function HomeTab() {
       <div className="relative">
         <TopBar />
 
-        <h1 className="mt-14 px-6 text-center text-[46px] font-bold leading-[1.05] tracking-tight">
-          Your secure
-          <br />
-          crypto wallet
-        </h1>
-
-        <p className="mt-4 text-center text-[15px] text-muted-foreground">
-          Total balance {l.hideBalances ? "••••" : fmt(l.total)}
+        <p className="mt-10 text-center text-[15px] text-muted-foreground">Total balance</p>
+        <p className="mt-1 text-center text-[44px] font-bold leading-none tracking-tight">
+          {l.hideBalances ? "••••" : fmt(l.total)}
         </p>
 
         <div className="mt-6 grid grid-cols-2 gap-3 px-5">

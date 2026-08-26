@@ -8,6 +8,7 @@ import { EarnTab } from "@/components/ledger/EarnTab";
 import { CardTab } from "@/components/ledger/CardTab";
 import { LedgerProvider } from "@/components/ledger/store";
 import { LedgerSheets } from "@/components/ledger/Sheets";
+import { LockScreen } from "@/components/ledger/Lock";
 
 const title = "Ledger — Crypto Wallet App";
 const description =
@@ -27,6 +28,9 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [tab, setTab] = useState<TabId>("home");
+  const [unlocked, setUnlocked] = useState(false);
+
+  if (!unlocked) return <LockScreen onUnlock={() => setUnlocked(true)} />;
 
   return (
     <LedgerProvider>

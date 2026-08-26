@@ -142,7 +142,7 @@ export function LedgerProvider({ children }: { children: ReactNode }) {
         addTx({ kind: "Swapped", assetId: fromId, amount, usd });
       },
     };
-  }, [assets, txs, sheet, hideBalances, byId, addTx, adjust]);
+  }, [assets, txs, sheet, hideBalances, byId, addTx, adjust, livePrices]);
 
   return <LedgerCtx.Provider value={value}>{children}</LedgerCtx.Provider>;
 }

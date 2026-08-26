@@ -22,6 +22,7 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, YAxis } from "recharts";
 import { fmt, fmtCrypto, seriesFor } from "./data";
 import { useLedger } from "./store";
 import { AssetIcon } from "./AssetRow";
+import { EditBalancesView } from "./EditBalances";
 
 function Shell({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -106,6 +107,7 @@ export function LedgerSheets() {
         {s.type === "settings" && <SettingsView />}
         {s.type === "scan" && <ScanView />}
         {s.type === "accounts" && <AccountsView />}
+        {s.type === "edit" && <EditBalancesView />}
         {s.type === "app" && <AppView name={s.name} />}
       </SheetContent>
     </Sheet>
