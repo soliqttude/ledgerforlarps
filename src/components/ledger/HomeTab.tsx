@@ -51,23 +51,6 @@ export function HomeTab() {
           {l.hideBalances ? "••••" : fmt(l.total)}
         </p>
 
-        <div className="mt-6 grid grid-cols-2 gap-3 px-5">
-          <button
-            onClick={() => l.open({ type: "scan" })}
-            className="flex flex-col items-center gap-2.5 rounded-2xl bg-card py-6 text-[17px] font-semibold active:bg-secondary"
-          >
-            <Scan className="h-6 w-6" strokeWidth={1.7} />
-            Connect
-          </button>
-          <button
-            onClick={() => l.open({ type: "app", name: "Buy a Ledger" })}
-            className="flex flex-col items-center gap-2.5 rounded-2xl bg-card py-6 text-[17px] font-semibold active:bg-secondary"
-          >
-            <ShoppingCart className="h-6 w-6" strokeWidth={1.7} />
-            Buy a Ledger
-          </button>
-        </div>
-
         <div className="mt-8 flex items-center justify-between px-5">
           <button
             onClick={() => toast.info("Market", { description: "Full market view coming from Ledger Live" })}
