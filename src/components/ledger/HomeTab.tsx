@@ -1,4 +1,4 @@
-import { User, Compass, Search, Clock, Scan, ShoppingCart, ChevronRight, ChevronDown } from "lucide-react";
+import { User, Compass, Search, Clock, ChevronRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { fmt, market } from "./data";
