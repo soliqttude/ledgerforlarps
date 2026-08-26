@@ -46,10 +46,30 @@ export function HomeTab() {
       <div className="relative">
         <TopBar />
 
-        <p className="mt-10 text-center text-[15px] text-muted-foreground">Total balance</p>
-        <p className="mt-1 text-center text-[44px] font-bold leading-none tracking-tight">
-          {l.hideBalances ? "••••" : fmt(l.total)}
-        </p>
+        <div className="mt-10 flex flex-col items-center justify-center">
+          {(() => {
+            if (l.hideBalances) {
+              return <p className="text-center text-[44px] leading-none tracking-tight">••••</p>;
+            }
+            const formatted = fmt(l.total);
+            const match = formatted.match(/^(.+)(\.\d+)$/);
+            if (!match) {
+              return <p className="text-center text-[44px] leading-none tracking-tight">{formatted}</p>;
+            }
+            return (
+              <p className="text-center text-[44px] leading-none tracking-tight">
+                <span>{match[1]}</span>
+                <span className="align-super text-[22px]">{match[2]}</span>
+              </p>
+            );
+          })()}
+          <button
+            onClick={() => toast.info("Performance", { description: "Detailed portfolio performance coming soon" })}
+            className="mt-4 flex items-center gap-1.5 rounded-full bg-success/15 px-3.5 py-1.5 text-[15px] text-success"
+          >
+            +5621.95% · Today <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
 
         <div className="mt-8 flex items-center justify-between px-5">
           <button
