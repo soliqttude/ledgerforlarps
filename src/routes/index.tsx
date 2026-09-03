@@ -34,7 +34,7 @@ function Index() {
 
   return (
     <LedgerProvider>
-      <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background text-foreground">
+      <div className="relative mx-auto flex min-h-screen max-w-[430px] flex-col overflow-x-hidden text-foreground app-shell grain">
         <main className="flex-1">
           {tab === "home" && <HomeTab />}
           {tab === "swap" && <SwapTab />}
