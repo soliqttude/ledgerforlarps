@@ -62,7 +62,7 @@ function PrimaryButton({ children, onClick, disabled }: { children: React.ReactN
     <button
       onClick={onClick}
       disabled={disabled}
-      className="mt-5 w-full rounded-full bg-primary py-3.5 text-[15px] font-semibold text-primary-foreground transition-all active:scale-[0.98] disabled:opacity-40"
+      className="mt-5 w-full rounded-full bg-primary py-3.5 text-[15px] font-medium text-primary-foreground transition-all active:scale-[0.98] disabled:opacity-40"
     >
       {children}
     </button>
@@ -131,7 +131,7 @@ function AssetDetail({ assetId }: { assetId: string }) {
       <div className="flex items-center gap-3">
         <AssetIcon asset={a} size={44} />
         <div>
-          <p className="text-[26px] font-semibold leading-tight">{fmt(a.price)}</p>
+          <p className="text-[26px] font-medium leading-tight">{fmt(a.price)}</p>
           <p className={`text-[13px] ${up ? "text-success" : "text-destructive"}`}>
             {up ? "+" : ""}
             {a.change.toFixed(2)}% today
@@ -191,7 +191,7 @@ function AssetDetail({ assetId }: { assetId: string }) {
         </div>
       </div>
 
-      <h3 className="mt-5 text-[15px] font-semibold">Operations</h3>
+      <h3 className="mt-5 text-[15px] font-medium">Operations</h3>
       <div className="mt-2 space-y-2">
         {l.txs.filter((t) => t.assetId === assetId).slice(0, 4).map((t) => (
           <div key={t.id} className="flex items-center justify-between rounded-2xl bg-secondary p-3 text-[14px]">
@@ -228,7 +228,7 @@ function SendView({ assetId }: { assetId?: string | undefined }) {
         className="mt-3 w-full rounded-2xl bg-secondary px-4 py-3 text-[14px] outline-none placeholder:text-muted-foreground"
       />
       <div className="mt-4 text-center">
-        <p className="text-[34px] font-semibold leading-none">{amount} <span className="text-[18px] text-muted-foreground">{a.ticker}</span></p>
+        <p className="text-[34px] font-medium leading-none">{amount} <span className="text-[18px] text-muted-foreground">{a.ticker}</span></p>
         <p className="mt-1 text-[13px] text-muted-foreground">{fmt(num * a.price)}</p>
         <button onClick={() => setAmount(String(a.amount))} className="mt-2 rounded-full bg-secondary px-3 py-1 text-[12px]">
           Max {fmtCrypto(a.amount)} {a.ticker}
@@ -295,7 +295,7 @@ function BuyView({ assetId }: { assetId?: string | undefined }) {
     <Shell title="Buy crypto">
       <AssetPicker value={id} onChange={setId} />
       <div className="mt-4 text-center">
-        <p className="text-[34px] font-semibold leading-none">${usd}</p>
+        <p className="text-[34px] font-medium leading-none">${usd}</p>
         <p className="mt-1 text-[13px] text-muted-foreground">≈ {fmtCrypto(num / a.price)} {a.ticker}</p>
       </div>
       <div className="mt-3 flex justify-center gap-2">
@@ -336,7 +336,7 @@ function SwapView({ assetId }: { assetId?: string | undefined }) {
       <p className="mt-4 text-[12px] uppercase tracking-wide text-muted-foreground">To</p>
       <div className="mt-2"><AssetPicker value={to} onChange={(v) => setTo(v === from ? to : v)} /></div>
       <div className="mt-4 rounded-2xl bg-secondary p-4 text-center">
-        <p className="text-[30px] font-semibold leading-none">{amount} <span className="text-[16px] text-muted-foreground">{f.ticker}</span></p>
+        <p className="text-[30px] font-medium leading-none">{amount} <span className="text-[16px] text-muted-foreground">{f.ticker}</span></p>
         <p className="mt-2 text-[14px] text-muted-foreground">≈ {fmtCrypto(out)} {t.ticker}</p>
       </div>
       <Numpad value={amount} onChange={setAmount} />
@@ -362,7 +362,7 @@ function StakeView({ assetId }: { assetId: string }) {
   return (
     <Shell title={`Stake ${a.name}`}>
       <div className="rounded-2xl bg-secondary p-4 text-center">
-        <p className="text-[30px] font-semibold leading-none">{amount} <span className="text-[16px] text-muted-foreground">{a.ticker}</span></p>
+        <p className="text-[30px] font-medium leading-none">{amount} <span className="text-[16px] text-muted-foreground">{a.ticker}</span></p>
         <p className="mt-1 text-[13px] text-muted-foreground">{fmt(num * a.price)}</p>
       </div>
       <Numpad value={amount} onChange={setAmount} />

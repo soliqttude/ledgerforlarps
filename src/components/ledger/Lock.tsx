@@ -23,7 +23,7 @@ export function LockScreen({ onUnlock }: { onUnlock: () => void }) {
         <LockIcon className="h-7 w-7" strokeWidth={1.7} />
       </div>
       <div className="text-center">
-        <h1 className="text-[30px] font-bold tracking-tight">Enter your key</h1>
+        <h1 className="text-[30px] font-medium tracking-tight">Enter your key</h1>
         <p className="mt-2 text-[15px] text-muted-foreground">Your wallet is locked.</p>
       </div>
       <form onSubmit={submit} className="w-full space-y-3">
@@ -41,7 +41,7 @@ export function LockScreen({ onUnlock }: { onUnlock: () => void }) {
         {error && <p className="text-center text-[15px] text-destructive">Wrong key, try again</p>}
         <button
           type="submit"
-          className="w-full rounded-full bg-foreground py-4 text-[18px] font-semibold text-background active:scale-[0.99]"
+          className="w-full rounded-full bg-foreground py-4 text-[18px] font-medium text-background active:scale-[0.99]"
         >
           Unlock
         </button>

@@ -74,7 +74,7 @@ export function HomeTab() {
         <div className="mt-8 flex items-center justify-between px-5">
           <button
             onClick={() => toast.info("Market", { description: "Full market view coming from Ledger Live" })}
-            className="flex items-center gap-2 text-[26px] font-bold tracking-tight"
+            className="flex items-center gap-2 text-[26px] font-medium tracking-tight"
           >
             Market <ChevronRight className="mt-1 h-5 w-5" />
           </button>
@@ -91,10 +91,10 @@ export function HomeTab() {
             onClick={() => toast.info("Market mood: Greed (78)")}
             className="flex w-[112px] shrink-0 flex-col items-center gap-1.5 rounded-2xl bg-card py-4 active:bg-secondary"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-success/70 text-[15px] font-semibold">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-success/70 text-[15px] font-medium">
               78
             </div>
-            <p className="text-[16px] font-semibold">Mood</p>
+            <p className="text-[16px] font-medium">Mood</p>
             <p className="text-[14px] text-success">Greed</p>
           </button>
           {(sort === "Trending" ? market : [...market].sort((a, b) => b.change - a.change)).map((m) => (
@@ -104,12 +104,12 @@ export function HomeTab() {
               className="flex w-[112px] shrink-0 flex-col items-center gap-1.5 rounded-2xl bg-card py-4 active:bg-secondary"
             >
               <div
-                className="flex h-11 w-11 items-center justify-center rounded-full text-[18px] font-semibold text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-full text-[18px] font-medium text-white"
                 style={{ backgroundColor: m.color }}
               >
                 {m.glyph}
               </div>
-              <p className="text-[16px] font-semibold">{m.ticker}</p>
+              <p className="text-[16px] font-medium">{m.ticker}</p>
               <p className={`text-[14px] ${m.change >= 0 ? "text-success" : "text-destructive"}`}>
                 {m.change >= 0 ? "+" : ""}
                 {m.change.toFixed(2)}%
@@ -119,14 +119,14 @@ export function HomeTab() {
         </div>
 
         <section className="mt-8 px-4">
-          <h2 className="px-1 text-[26px] font-bold tracking-tight">Crypto</h2>
+          <h2 className="px-1 text-[26px] font-medium tracking-tight">Crypto</h2>
           <div className="mt-2">
             {crypto.map((a) => (
               <AssetRow key={a.id} asset={a} hidden={l.hideBalances} onClick={() => l.open({ type: "asset", assetId: a.id })} />
             ))}
           </div>
 
-          <h2 className="mt-6 px-1 text-[26px] font-bold tracking-tight">Stablecoins</h2>
+          <h2 className="mt-6 px-1 text-[26px] font-medium tracking-tight">Stablecoins</h2>
           <div className="mt-2">
             {stables.map((a) => (
               <AssetRow key={a.id} asset={a} hidden={l.hideBalances} onClick={() => l.open({ type: "asset", assetId: a.id })} />

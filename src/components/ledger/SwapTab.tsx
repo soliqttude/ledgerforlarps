@@ -44,7 +44,7 @@ export function SwapTab() {
               />
               <button
                 onClick={() => setPicking("from")}
-                className="flex shrink-0 items-center gap-2 rounded-full bg-secondary px-4 py-3 text-[18px] font-semibold active:bg-accent"
+                className="flex shrink-0 items-center gap-2 rounded-full bg-secondary px-4 py-3 text-[18px] font-medium active:bg-accent"
               >
                 {from ? (
                   <>
@@ -78,7 +78,7 @@ export function SwapTab() {
               <p className="text-[36px] font-medium text-muted-foreground/80">{out ? fmtCrypto(+out.toFixed(6)) : "0"}</p>
               <button
                 onClick={() => setPicking("to")}
-                className="flex shrink-0 items-center gap-2 rounded-full bg-secondary px-4 py-3 text-[18px] font-semibold active:bg-accent"
+                className="flex shrink-0 items-center gap-2 rounded-full bg-secondary px-4 py-3 text-[18px] font-medium active:bg-accent"
               >
                 {to ? (
                   <>
@@ -103,7 +103,7 @@ export function SwapTab() {
             setAmount("");
             toast.success(`Swapped ${num} ${from!.ticker} → ${fmtCrypto(+out.toFixed(6))} ${to!.ticker}`);
           }}
-          className="w-full rounded-full bg-card py-5 text-[19px] font-semibold text-muted-foreground/70 transition-colors disabled:opacity-100 enabled:bg-foreground enabled:text-background active:scale-[0.99]"
+          className="w-full rounded-full bg-card py-5 text-[19px] font-medium text-muted-foreground/70 transition-colors disabled:opacity-100 enabled:bg-foreground enabled:text-background active:scale-[0.99]"
         >
           View quotes
         </button>
@@ -120,7 +120,7 @@ export function SwapTab() {
               <X className="h-5 w-5" />
             </button>
           </div>
-          <h2 className="px-5 pt-3 text-[32px] font-bold tracking-tight">Select asset</h2>
+          <h2 className="px-5 pt-3 text-[32px] font-medium tracking-tight">Select asset</h2>
           <div className="mx-5 mt-4 flex items-center gap-3 rounded-2xl bg-secondary px-4 py-3.5">
             <Search className="h-5 w-5 text-muted-foreground" />
             <input
@@ -144,11 +144,11 @@ export function SwapTab() {
               >
                 <AssetIcon asset={a} size={48} />
                 <div className="flex-1">
-                  <p className="text-[17px] font-semibold">{a.name}</p>
+                  <p className="text-[17px] font-medium">{a.name}</p>
                   <p className="text-[15px] text-muted-foreground">{a.ticker}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[17px] font-semibold">{fmt(a.amount * a.price)}</p>
+                  <p className="text-[17px] font-medium">{fmt(a.amount * a.price)}</p>
                   <p className="text-[15px] text-muted-foreground">
                     {fmtCrypto(a.amount)} {a.ticker}
                   </p>
