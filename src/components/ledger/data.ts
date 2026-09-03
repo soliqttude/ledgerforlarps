@@ -74,3 +74,40 @@ export const fmt = (n: number, digits = 2) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: digits, maximumFractionDigits: digits });
 
 export const fmtCrypto = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 6 });
+
+const supplyInfo: Record<string, { circulating: number; max: number | null; rank: number; athMul: number; atlMul: number }> = {
+  btc: { circulating: 20.079e6, max: 21e6, rank: 1, athMul: 1.58, atlMul: 0.0000008 },
+  eth: { circulating: 120.4e6, max: null, rank: 2, athMul: 1.49, atlMul: 0.0001 },
+  usdt: { circulating: 141.2e9, max: null, rank: 3, athMul: 1.02, atlMul: 0.94 },
+  xrp: { circulating: 57.1e9, max: 100e9, rank: 4, athMul: 5.9, atlMul: 0.005 },
+  bnb: { circulating: 145.9e6, max: 200e6, rank: 5, athMul: 1.35, atlMul: 0.0002 },
+  sol: { circulating: 471.2e6, max: null, rank: 6, athMul: 1.72, atlMul: 0.003 },
+  usdc: { circulating: 43.6e9, max: null, rank: 7, athMul: 1.02, atlMul: 0.89 },
+  dai: { circulating: 5.3e9, max: null, rank: 12, athMul: 1.05, atlMul: 0.9 },
+};
+
+export const compact = (n: number) => {
+  if (n >= 1e12) return `$${(n / 1e12).toFixed(3)} tn`;
+  if (n >= 1e9) return `$${(n / 1e9).toFixed(3)} bn`;
+  if (n >= 1e6) return `$${(n / 1e6).toFixed(3)} m`;
+  return fmt(n);
+};
+
+export const compactUnits = (n: number, ticker: string) => {
+  if (n >= 1e9) return `${(n / 1e9).toFixed(3)} bn ${ticker}`;
+  if (n >= 1e6) return `${(n / 1e6).toFixed(3)} m ${ticker}`;
+  if (n >= 1e3) return `${(n / 1e3).toFixed(3)} k ${ticker}`;
+  return `${n} ${ticker}`;
+};
+
+export function statsFor(a: Asset) {
+  const info = supplyInfo[a.id] ?? { circulating: 1e9, max: null, rank: 20, athMul: 1.6, atlMul: 0.01 };
+  return {
+    marketCap: a.price * info.circulating,
+    rank: info.rank,
+    circulating: info.circulating,
+    max: info.max,
+    ath: a.price * info.athMul,
+    atl: a.price * info.atlMul,
+  };
+}
