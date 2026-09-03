@@ -18,7 +18,7 @@ export function EditBalancesView() {
   return (
     <div className="max-h-[80vh] overflow-y-auto px-5 pb-8">
       <SheetHeader className="px-0">
-        <SheetTitle className="text-[24px] font-bold tracking-tight">Edit balances</SheetTitle>
+        <SheetTitle className="text-[24px] font-medium tracking-tight">Edit balances</SheetTitle>
       </SheetHeader>
       <p className="text-[15px] text-muted-foreground">Search a coin and set how much you hold.</p>
 
@@ -34,7 +34,7 @@ export function EditBalancesView() {
           <div key={a.id} className="flex items-center gap-3 rounded-2xl bg-secondary/60 p-3">
             <AssetIcon asset={a} size={40} />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[17px] font-semibold">{a.name}</p>
+              <p className="truncate text-[17px] font-medium">{a.name}</p>
               <p className="text-[14px] text-muted-foreground">
                 {fmt(a.price, a.price < 1 ? 4 : 2)} · {fmt(a.price * a.amount)}
               </p>
@@ -44,7 +44,7 @@ export function EditBalancesView() {
               inputMode="decimal"
               value={a.amount}
               onChange={(e) => l.setAmount(a.id, Number(e.target.value))}
-              className="w-28 rounded-xl bg-card px-3 py-2 text-right text-[16px] font-semibold outline-none ring-1 ring-border"
+              className="w-28 rounded-xl bg-card px-3 py-2 text-right text-[16px] font-medium outline-none ring-1 ring-border"
             />
           </div>
         ))}
@@ -56,7 +56,7 @@ export function EditBalancesView() {
           toast.success("Balances saved");
           l.close();
         }}
-        className="mt-5 w-full rounded-full bg-foreground py-4 text-[18px] font-semibold text-background active:scale-[0.99]"
+        className="mt-5 w-full rounded-full bg-foreground py-4 text-[18px] font-medium text-background active:scale-[0.99]"
       >
         Done
       </button>

@@ -3,7 +3,7 @@ import { fmt, fmtCrypto, type Asset } from "./data";
 export function AssetIcon({ asset, size = 44 }: { asset: Asset; size?: number }) {
   return (
     <div
-      className="flex shrink-0 items-center justify-center rounded-full font-semibold text-white ring-1 ring-white/10"
+      className="flex shrink-0 items-center justify-center rounded-full font-medium text-white ring-1 ring-white/10"
       style={{ width: size, height: size, backgroundColor: asset.color, fontSize: size * 0.44 }}
     >
       {asset.glyph}
@@ -28,12 +28,12 @@ export function AssetRow({
     >
       <AssetIcon asset={asset} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[17px] font-semibold text-foreground">{asset.name}</p>
+        <p className="truncate text-[17px] font-medium text-foreground">{asset.name}</p>
         <p className="text-[15px] text-muted-foreground">
           {hidden ? "••••" : fmtCrypto(asset.amount)} {asset.ticker}
         </p>
       </div>
-      <p className="text-[17px] font-semibold text-foreground">{hidden ? "••••" : fmt(value)}</p>
+      <p className="text-[17px] font-medium text-foreground">{hidden ? "••••" : fmt(value)}</p>
     </button>
   );
 }
