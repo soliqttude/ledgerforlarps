@@ -18,7 +18,7 @@ export function LockScreen({ onUnlock }: { onUnlock: () => void }) {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 bg-background px-8 text-foreground">
+    <div className="relative mx-auto flex min-h-screen max-w-[430px] flex-col items-center justify-center gap-6 px-8 text-foreground app-shell grain">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-card ring-1 ring-border">
         <LockIcon className="h-7 w-7" strokeWidth={1.7} />
       </div>
